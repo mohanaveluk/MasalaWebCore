@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netcore-app-deployment
+  labels:
+    app: netcore-application
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: netcore-app-pod
+      app: netcore-application
+  template:
+    metadata:
+      name: netcore-app-pod
+      labels:
+        name: netcore-app-pod
+        app: netcore-application
+    spec:
+      containers:
+      - name: netcore-app
+        image: mohanaveluk/masalawebcore:1.#{Build.BuildId}#
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
